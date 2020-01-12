@@ -3,7 +3,7 @@ package com.restaurent.config
 import javax.sql.DataSource
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.configuration.{EnableWebSecurity, WebSecurityConfigurerAdapter}
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.{Autowired, Value}
 import org.springframework.context.annotation.Bean
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -17,6 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
   jsr250Enabled = true)
 class WebSecurityConfig(@Autowired val dataSource:DataSource) extends WebSecurityConfigurerAdapter {
 
+  @Value("${app.secretkey}")
+  private val secretKey: String = ""
+
   override def configure(http: HttpSecurity) = {
       http.authorizeRequests()
           .antMatchers("/console", "/console/**", "/swagger-ui.html", "/**/*.css", "/**/*.js", "/**/*.png", "/configuration",
@@ -26,7 +29,7 @@ class WebSecurityConfig(@Autowired val dataSource:DataSource) extends WebSecurit
       http.headers().frameOptions().disable
       http.httpBasic.disable()
       http.formLogin().disable()
-      http.addFilterBefore(new JWTAuthorizationFilter, classOf[UsernamePasswordAuthenticationFilter])
+      http.addFilterBefore(new JWTAuthorizationFilter(secretKey), classOf[UsernamePasswordAuthenticationFilter])
   }
 
   @Bean

@@ -1,18 +1,18 @@
 package com.restaurent.config
 
+import java.util.Arrays
+
+import io.jsonwebtoken._
 import javax.servlet.FilterChain
 import javax.servlet.http.{HttpServletRequest, HttpServletResponse}
-import org.springframework.web.filter.OncePerRequestFilter
-import io.jsonwebtoken._
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
-import java.util.Arrays
+import org.springframework.web.filter.OncePerRequestFilter
 
 
-class JWTAuthorizationFilter extends OncePerRequestFilter {
+class JWTAuthorizationFilter(private val secretKey: String) extends OncePerRequestFilter {
 
-  private val secretKey = "926D96C90030DD58429D2751AC1BDBBC"
   private val bearerPrefix = "Bearer "
 
   override def doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain): Unit = {
