@@ -38,7 +38,7 @@ class JWTAuthorizationFilter extends OncePerRequestFilter {
         print(s"The user  ===>  ${userId} ")
         val role = new SimpleGrantedAuthority("ROLE_ADMIN")
         val authorities = Arrays.asList(role)
-        val user: UsernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("dali", null, authorities)
+        val user: UsernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userId, null, authorities)
         SecurityContextHolder.getContext.setAuthentication(user)
       }
     }

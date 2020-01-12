@@ -19,7 +19,7 @@ class UserService(@Autowired private val userRepository: UserRepository) {
 //    @PreAuthorize("hasRole('user')")
 //    @PostAuthorize("returnObject.username==principal.username || hasRole('admin')")
     def findUser(id: Long): Users = {
-      userRepository.findOne(id)
+      userRepository.findById(id).orElseThrow(() => new RuntimeException(s"user not found for id ${id}"))
     }
 
 //    @PreAuthorize("hasRole('admin')")
