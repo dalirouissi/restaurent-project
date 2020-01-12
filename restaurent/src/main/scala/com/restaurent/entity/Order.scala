@@ -12,7 +12,7 @@ import scala.beans.BeanProperty
 class Order {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   var id: Long = _
 
   @Column(name = "orderNo")

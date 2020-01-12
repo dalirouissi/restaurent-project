@@ -9,7 +9,7 @@ import scala.beans.BeanProperty
 class OrderItem {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   var id:Long = _
 
   @BeanProperty

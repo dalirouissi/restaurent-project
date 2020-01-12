@@ -5,6 +5,7 @@ import java.lang.{Iterable, Long}
 import com.restaurent.payload.{OrderJson, OrderRequest, OrderResponse}
 import com.restaurent.service.OrderService
 import org.springframework.http.{HttpStatus, ResponseEntity}
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.{CrossOrigin, DeleteMapping, GetMapping, PathVariable, PostMapping, RequestBody, RequestMapping, RestController}
 
 @RestController
@@ -17,6 +18,7 @@ class OrderController(private val orderService: OrderService) {
     orderService.findById(orderId)
   }
 
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(path = Array("/order"))
   def orders():Iterable[OrderJson] = {
     orderService.allOrders()
