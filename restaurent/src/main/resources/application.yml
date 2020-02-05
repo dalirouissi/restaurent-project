@@ -9,10 +9,12 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-#      ddl-auto: update
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
 
-
-app:
-  secretkey: 926D96C90030DD58429D2751AC1BDBBC
-
+#The authorization server key uri address to fetch the public key and verify the signature of the access token
+# https://github.com/dalirouissi/spring-social-with-angular-and-spring-security
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-uri: http://localhost:8080/oauth/token_key

@@ -1,6 +1,7 @@
 package com.restaurent.controller
 
 import java.lang.Iterable
+import java.security.Principal
 
 import com.restaurent.payload.CustomerResponse
 import com.restaurent.service.CustomerService
@@ -12,12 +13,10 @@ import org.springframework.web.bind.annotation.{CrossOrigin, GetMapping, Request
 @CrossOrigin(origins = Array("http://localhost:4200"))
 class CustomerController(private val customerService: CustomerService) {
 
-
-  @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping(path = Array("/customers"))
-  def allCustomers(): Iterable[CustomerResponse] = {
+  @PreAuthorize("hasRole('USER')")
+  def allCustomers(principal: Principal): Iterable[CustomerResponse] = {
+    println("The principal  is  ==>   " + principal.getName + " is executing the allCustomers method")
     customerService.allCustomers()
   }
-
-
 }
